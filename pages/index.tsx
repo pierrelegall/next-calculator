@@ -1,6 +1,8 @@
 import Head from "next/head"
 import styles from "../styles/Home.module.css"
 
+import Calculator from "../components/Calculator"
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -11,9 +13,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Next Calculator
-        </h1>
+        <Calculator />
       </main>
     </div>
   )
