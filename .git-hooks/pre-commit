@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Pre-commit hook
+
+set -e
+
+npm run test
+npm run lint
