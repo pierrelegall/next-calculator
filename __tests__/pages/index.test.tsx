@@ -1,12 +1,16 @@
 import "@testing-library/jest-dom"
-import { render, screen as $ } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 
 import Home from "../../pages/index"
+
+const $ = {
+  calculator: () => screen.getByTestId("Calculator")
+}
 
 describe("Home", () => {
   beforeEach(() => render(<Home />))
 
   it("show a calculator", () => {
-    expect($.getByTestId("Calculator")).toBeInTheDocument()
+    expect($.calculator()).toBeInTheDocument()
   })
 })
