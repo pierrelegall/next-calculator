@@ -1,8 +1,36 @@
+import { useState } from "react"
 import { Box, Button, Paper, Stack, TextField } from "@mui/material"
 
 interface Props { }
 
 export default function Calculator(_props: Props) {
+  const [inputs, setInputs] = useState<string[]>([])
+  const [formatedInputs, setFormatedInputs] = useState<string>("")
+  const [, setOutput] = useState<number>(NaN)
+  const [formatedOutput, setFormatedOutput] = useState<string>("")
+
+  function update(inputs: string[]) {
+    setInputs(inputs)
+    setFormatedInputs(formatInputs(inputs))
+
+    const output = compute(inputs)
+
+    setOutput(output)
+    setFormatedOutput(formatOutput(output))
+  }
+
+  function insert(input: string) {
+    update([...inputs, input])
+  }
+
+  function remove() {
+    if (inputs.length > 0) update(inputs.slice(0, inputs.length - 1))
+  }
+
+  function clear() {
+    update([])
+  }
+
   return (
     <Box data-testid="Calculator">
       <Paper elevation={4}>
@@ -53,4 +81,34 @@ export default function Calculator(_props: Props) {
       </Paper>
     </Box>
   )
+}
+
+function compute(inputs: string[]): number {
+  try {
+    return Number(eval(formatInputsForEval(inputs)))
+  } catch (_error) {
+    return NaN
+  }
+}
+
+function formatInputs(inputs: string[]): string {
+  return inputs.join("")
+}
+
+function formatInputsForEval(inputs: string[]): string {
+  return inputs.map(input => {
+    switch (input) {
+      case "×":
+        return "*"
+      case "÷":
+        return "/"
+      default:
+        return input
+    }
+  }).join("")
+}
+
+function formatOutput(output: number): string {
+  if (Number.isNaN(output)) return ""
+  else return String(output)
 }
