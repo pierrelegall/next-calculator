@@ -5,18 +5,11 @@ interface Props { }
 
 export default function Calculator(_props: Props) {
   const [inputs, setInputs] = useState<string[]>([])
-  const [formatedInputs, setFormatedInputs] = useState<string>("")
-  const [, setOutput] = useState<number>(NaN)
-  const [formatedOutput, setFormatedOutput] = useState<string>("")
+  const [output, setOutput] = useState<number>(NaN)
 
   function update(inputs: string[]) {
     setInputs(inputs)
-    setFormatedInputs(formatInputs(inputs))
-
-    const output = compute(inputs)
-
-    setOutput(output)
-    setFormatedOutput(formatOutput(output))
+    setOutput(compute(inputs))
   }
 
   function insert(input: string) {
@@ -37,11 +30,11 @@ export default function Calculator(_props: Props) {
         <Stack direction={"row"}>
           <Stack direction={"column"} margin={2} spacing={1}>
             <TextField
-              value={formatedInputs}
+              value={formatInputs(inputs)}
               inputProps={{ readOnly: true, "data-testid": "inputs" }}
             />
             <TextField
-              value={formatedOutput}
+              value={formatOutput(output)}
               inputProps={{ readOnly: true, "data-testid": "output" }}
             />
             <Stack direction={"row"} spacing={1}>
