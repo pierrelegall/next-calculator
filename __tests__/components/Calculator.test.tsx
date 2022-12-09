@@ -23,7 +23,7 @@ describe("Calculator", () => {
   })
 
   it("have all buttons", () => {
-    "01234567890+-×÷↩=C".split("").forEach(char => {
+    "()01234567890+-×÷↩C".split("").forEach(char => {
       expect($$.button(char)).toBeInTheDocument()
     })
   })
@@ -93,5 +93,16 @@ describe("Calculator", () => {
     fireEvent.click($$.button("÷"))
     fireEvent.click($$.button("9"))
     expect($$.output()).toHaveValue("5")
+  })
+
+  it("show the result of calculation with ()", () => {
+    fireEvent.click($$.button("2"))
+    fireEvent.click($$.button("×"))
+    fireEvent.click($$.button("("))
+    fireEvent.click($$.button("4"))
+    fireEvent.click($$.button("+"))
+    fireEvent.click($$.button("5"))
+    fireEvent.click($$.button(")"))
+    expect($$.output()).toHaveValue("18")
   })
 })
