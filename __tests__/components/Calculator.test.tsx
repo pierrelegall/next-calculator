@@ -6,12 +6,12 @@ import Calculator from "../../components/Calculator"
 describe("Calculator", () => {
   beforeEach(() => render(<Calculator />))
 
-  it("have a calculation screen", () => {
-    expect($.getByTestId("Calculator.calculation")).toBeInTheDocument()
+  it("have inputs shown", () => {
+    expect(getInputs()).toBeInTheDocument()
   })
 
-  it("have a result screen", () => {
-    expect($.getByTestId("Calculator.result")).toBeInTheDocument()
+  it("have a output shown", () => {
+    expect(getOutput()).toBeInTheDocument()
   })
 
   it("have all buttons", () => {
@@ -20,21 +20,16 @@ describe("Calculator", () => {
     })
   })
 
-  /*
-  Test fail output:
-
-    expect(received).toEqual(expected) // deep equality
-
-    Expected: ""
-    Received: "​"
-
-      20 |   it("show nothing on screen by default", () => {
-    > 21 |     expect($.getByTestId("screen").textContent).toEqual("")
-      22 |   })                                            ^
-
-  Excuuuuuuse me?
-  */
-  it.skip("show nothing on screen by default", () => {
-    expect($.getByTestId("Calculator.screen").textContent).toEqual("")
+  it("have inputs and output empty by default", () => {
+    expect(getInputs()).toHaveValue("")
+    expect(getOutput()).toHaveValue("")
   })
 })
+
+function getInputs() {
+  return $.getByTestId("inputs")
+}
+
+function getOutput() {
+  return $.getByTestId("output")
+}
