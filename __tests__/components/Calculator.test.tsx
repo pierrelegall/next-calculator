@@ -22,26 +22,26 @@ const $$ = {
 describe("Calculator", () => {
   beforeEach(() => render(<Calculator />))
 
-  it("have inputs shown", () => {
+  it("has an inputs field", () => {
     expect($.inputs()).toBeInTheDocument()
   })
 
-  it("have a output shown", () => {
+  it("has an output field", () => {
     expect($.output()).toBeInTheDocument()
   })
 
-  it("have all buttons", () => {
+  it("has all buttons", () => {
     "()01234567890+-×÷↩C".split("").forEach(char => {
       expect($.button(char)).toBeInTheDocument()
     })
   })
 
-  it("have inputs and output empty by default", () => {
+  it("has inputs and output fields empty by default", () => {
     expect($.inputs()).toHaveValue("")
     expect($.output()).toHaveValue("")
   })
 
-  it("add char to the calculation on click", () => {
+  it("adds input to inputs on button click", () => {
     $$.clickButtons("5")
     expect($.inputs()).toHaveValue("5")
 
@@ -52,49 +52,49 @@ describe("Calculator", () => {
     expect($.inputs()).toHaveValue("5+7")
   })
 
-  it("remove a char from the input on ↩ click", () => {
+  it("removes an input to inputs on ↩ click", () => {
     $$.clickButtons("2+")
     $$.clickBackButton()
     expect($.output()).toHaveValue("2")
   })
 
-  it("remove all char from the input on C click", () => {
+  it("clears inputs on C click", () => {
     $$.clickButtons("2+")
     $$.clickClearButton()
     expect($.output()).toHaveValue("")
   })
 
-  it("show last valid output if calculation not valid", () => {
+  it("shows last valid output if calculation not valid", () => {
     $$.clickButtons("5++2")
     expect($.output()).toHaveValue("5")
   })
 
-  it("show last valid output if calculation not valid disabled", () => {
+  it("shows output field disabled if calculation not valid", () => {
     $$.clickButtons("5++2")
     expect($.output()).toHaveAttribute("disabled")
   })
 
-  it("show the result of + calculation", () => {
+  it("shows the result of a + calculation", () => {
     $$.clickButtons("5+7")
     expect($.output()).toHaveValue("12")
   })
 
-  it("show the result of - calculation", () => {
+  it("shows the result of a - calculation", () => {
     $$.clickButtons("5-7")
     expect($.output()).toHaveValue("-2")
   })
 
-  it("show the result of × calculation", () => {
+  it("shows the result of a × calculation", () => {
     $$.clickButtons("4×8")
     expect($.output()).toHaveValue("32")
   })
 
-  it("show the result of ÷ calculation", () => {
+  it("shows the result of a ÷ calculation", () => {
     $$.clickButtons("45÷9")
     expect($.output()).toHaveValue("5")
   })
 
-  it("show the result of calculation with ()", () => {
+  it("shows the result of a calculation with parenthesis", () => {
     $$.clickButtons("2×(4+5)")
     expect($.output()).toHaveValue("18")
   })
