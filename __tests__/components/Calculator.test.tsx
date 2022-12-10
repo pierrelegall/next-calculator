@@ -64,9 +64,14 @@ describe("Calculator", () => {
     expect($.output()).toHaveValue("")
   })
 
-  it("show no result if calculation not valid", () => {
+  it("show last valid output if calculation not valid", () => {
     $$.clickButtons("5++2")
-    expect($.output()).toHaveValue("")
+    expect($.output()).toHaveValue("5")
+  })
+
+  it("show last valid output if calculation not valid disabled", () => {
+    $$.clickButtons("5++2")
+    expect($.output()).toHaveAttribute("disabled")
   })
 
   it("show the result of + calculation", () => {

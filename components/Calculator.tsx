@@ -6,10 +6,14 @@ interface Props { }
 export default function Calculator(_props: Props) {
   const [inputs, setInputs] = useState<string[]>([])
   const [output, setOutput] = useState<number>(NaN)
+  const [lastValidOutput, setLastValidOutput] = useState<number>(NaN)
 
   function update(inputs: string[]) {
+    const nextOutput = compute(inputs)
+
     setInputs(inputs)
-    setOutput(compute(inputs))
+    setOutput(nextOutput)
+    if (!isOutputValid(nextOutput)) setLastValidOutput(nextOutput)
   }
 
   function insert(input: string) {
@@ -34,7 +38,8 @@ export default function Calculator(_props: Props) {
               inputProps={{ readOnly: true, "data-testid": "inputs" }}
             />
             <TextField
-              value={formatOutput(output)}
+              value={isInputsEmpty(inputs) ? "" : formatOutput(lastValidOutput)}
+              disabled={isOutputValid(output)}
               inputProps={{ readOnly: true, "data-testid": "output" }}
             />
             <Stack direction={"row"} spacing={1}>
@@ -100,6 +105,14 @@ function formatInputsForEval(inputs: string[]): string {
 }
 
 function formatOutput(output: number): string {
-  if (Number.isNaN(output)) return ""
+  if (isOutputValid(output)) return ""
   else return String(output)
+}
+
+function isInputsEmpty(inputs: string[]) {
+  return inputs.length === 0
+}
+
+function isOutputValid(output: number) {
+  return Number.isNaN(output)
 }
